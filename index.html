@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roshana Richards — Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --ink:#11161A;
+  --paper:#FAF7F1;
+  --paper-2:#F1ECE2;
+  --green:#1B5E3F;
+  --green-deep:#0F3D29;
+  --coral:#F2A88C;
+  --coral-deep:#E08A68;
+  --stone:#6B6358;
+  --stone-light:#A39C8E;
+  --line: rgba(17,22,26,0.10);
+  --serif:'Fraunces', serif;
+  --sans:'Inter', sans-serif;
+  --mono:'JetBrains Mono', monospace;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+
+::selection{background:var(--coral);color:var(--ink);}
+
+/* ===== Layout shell ===== */
+.wrap{
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 32px;
+  position:relative;
+}
+
+@media (max-width:640px){
+  .wrap{padding:0 20px;}
+}
+
+/* ===== Top nav ===== */
+.topnav{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:100;
+  background:rgba(250,247,241,0.88);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.topnav-inner{
+  max-width:1100px;
+  margin:0 auto;
+  padding:18px 32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+@media (max-width:640px){ .topnav-inner{padding:14px 20px;} }
+.brand-mark{
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:18px;
+  letter-spacing:0.01em;
+}
+.nav-links{
+  display:flex;
+  gap:28px;
+  font-size:13px;
+  font-weight:500;
+  color:var(--stone);
+}
+.nav-links a:hover{color:var(--ink);}
+@media (max-width:640px){ .nav-links{display:none;} }
+
+/* ===== Build rail (signature element) ===== */
+.rail{
+  position:absolute;
+  left:-2px;
+  top:0;
+  bottom:0;
+  width:1px;
+  background:var(--line);
+  display:none;
+}
+@media (min-width:900px){ .rail{display:block;} }
+.rail-mark{
+  position:absolute;
+  left:-4px;
+  width:9px;height:9px;
+  border-radius:50%;
+  background:var(--paper);
+  border:1.5px solid var(--stone-light);
+}
+.rail-mark.active{ border-color:var(--green); background:var(--green); }
+.rail-label{
+  position:absolute;
+  left:16px;
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--stone-light);
+  white-space:nowrap;
+  top:-6px;
+}
+
+/* ===== Hero ===== */
+.hero{
+  padding:160px 0 100px;
+  position:relative;
+}
+.hero-eyebrow{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--green);
+  margin-bottom:24px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.hero-eyebrow::before{
+  content:'';
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--coral);
+  display:inline-block;
+}
+.hero h1{
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:clamp(40px, 7vw, 76px);
+  line-height:1.04;
+  letter-spacing:-0.01em;
+  max-width:880px;
+}
+.hero h1 em{
+  font-style:italic;
+  font-weight:400;
+  color:var(--green);
+}
+.hero-sub{
+  margin-top:28px;
+  font-size:18px;
+  line-height:1.6;
+  color:var(--stone);
+  max-width:560px;
+}
+.hero-meta{
+  display:flex;
+  gap:32px;
+  margin-top:48px;
+  flex-wrap:wrap;
+}
+.hero-meta-item{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--stone);
+}
+.hero-meta-item b{
+  display:block;
+  font-family:var(--sans);
+  font-size:15px;
+  font-weight:600;
+  color:var(--ink);
+  margin-bottom:2px;
+}
+
+/* ===== Section scaffolding ===== */
+section{
+  padding:64px 0;
+  position:relative;
+  border-top:1px solid var(--line);
+}
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  margin-bottom:48px;
+  gap:24px;
+  flex-wrap:wrap;
+}
+.section-num{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--stone-light);
+}
+.section-title{
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:clamp(28px,4vw,40px);
+}
+.section-date{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--stone-light);
+  text-align:right;
+}
+
+/* ===== Featured project: Gutty ===== */
+.featured{
+  background:var(--green-deep);
+  color:var(--paper);
+  border-radius:28px;
+  padding:56px;
+  margin-top:8px;
+  position:relative;
+  overflow:hidden;
+}
+@media (max-width:640px){ .featured{padding:32px 24px; border-radius:20px;} }
+.featured::before{
+  content:'';
+  position:absolute;
+  top:-120px; right:-120px;
+  width:340px;height:340px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(242,168,140,0.25), transparent 70%);
+}
+.featured-grid{
+  display:grid;
+  grid-template-columns:1.1fr 0.9fr;
+  gap:56px;
+  align-items:start;
+  position:relative;
+  z-index:1;
+}
+@media (max-width:860px){ .featured-grid{grid-template-columns:1fr; gap:40px;} }
+
+.featured-tag{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--coral);
+  margin-bottom:18px;
+}
+.featured h3{
+  font-family:var(--serif);
+  font-size:clamp(28px,4vw,42px);
+  font-weight:500;
+  line-height:1.1;
+  margin-bottom:18px;
+}
+.featured p{
+  font-size:16px;
+  line-height:1.7;
+  color:rgba(250,247,241,0.78);
+  margin-bottom:16px;
+}
+.featured-stats{
+  display:flex;
+  gap:28px;
+  margin:32px 0;
+  flex-wrap:wrap;
+}
+.fstat b{
+  font-family:var(--serif);
+  font-size:28px;
+  display:block;
+  color:var(--coral);
+}
+.fstat span{
+  font-family:var(--mono);
+  font-size:11px;
+  color:rgba(250,247,241,0.6);
+}
+.featured-links{
+  display:flex;
+  gap:14px;
+  margin-top:28px;
+  flex-wrap:wrap;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 22px;
+  border-radius:100px;
+  font-size:13px;
+  font-weight:600;
+  font-family:var(--sans);
+  transition:transform .15s ease, opacity .15s ease;
+}
+.btn:hover{ transform:translateY(-1px); }
+.btn-primary{ background:var(--coral); color:var(--green-deep); }
+.btn-ghost{ border:1px solid rgba(250,247,241,0.3); color:var(--paper); }
+.btn-dark{ background:var(--ink); color:var(--paper); }
+.btn-dark:hover{ opacity:0.85; }
+
+.phone-stack{
+  position:relative;
+  display:flex;
+  justify-content:center;
+}
+.phone-frame{
+  width:220px;
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,0.5);
+  border:1px solid rgba(250,247,241,0.15);
+}
+.phone-frame img{ width:100%; display:block; }
+.phone-frame.b{
+  position:absolute;
+  top:60px; left:-30px;
+  width:170px;
+  z-index:-1;
+  opacity:0.85;
+  transform:rotate(-6deg);
+}
+@media (max-width:860px){
+  .phone-stack{ margin-top:8px; }
+  .phone-frame.b{ display:none; }
+}
+
+.placeholder-shot{
+  width:100%;
+  aspect-ratio:9/19;
+  background:linear-gradient(160deg, rgba(250,247,241,0.12), rgba(250,247,241,0.04));
+  border:1px dashed rgba(250,247,241,0.3);
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--mono);
+  font-size:11px;
+  color:rgba(250,247,241,0.45);
+  text-align:center;
+  padding:20px;
+}
+
+/* ===== Timeline chapters (Parle / ROCKChurch / Dawn of Joy) ===== */
+.chapter{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  gap:48px;
+  padding:44px 0;
+  border-bottom:1px solid var(--line);
+}
+.chapter:last-child{ border-bottom:none; }
+@media (max-width:760px){ .chapter{grid-template-columns:1fr; gap:16px;} }
+
+.chapter-meta{ position:sticky; top:100px; align-self:start; }
+.chapter-role{
+  font-family:var(--serif);
+  font-size:22px;
+  font-weight:500;
+  margin-bottom:4px;
+}
+.chapter-org{
+  font-size:14px;
+  color:var(--stone);
+  margin-bottom:8px;
+}
+.chapter-date{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--stone-light);
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+
+.chapter-body p{
+  font-size:16px;
+  line-height:1.75;
+  color:var(--ink);
+  max-width:640px;
+  margin-bottom:14px;
+}
+.chapter-tags{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:18px 0 24px;
+}
+.tag{
+  font-family:var(--mono);
+  font-size:11px;
+  padding:5px 12px;
+  border-radius:100px;
+  border:1px solid var(--line);
+  color:var(--stone);
+}
+.chapter-visual{
+  margin-top:24px;
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:12px;
+}
+@media (max-width:540px){ .chapter-visual{grid-template-columns:1fr 1fr;} }
+.shot-slot{
+  aspect-ratio:4/5;
+  background:var(--paper-2);
+  border:1px dashed var(--stone-light);
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--stone-light);
+  text-align:center;
+  padding:10px;
+  overflow:hidden;
+}
+.shot-slot img{ width:100%; height:100%; object-fit:cover; border-radius:12px; }
+
+.chapter-link{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--green);
+  margin-top:4px;
+}
+.chapter-link:hover{ text-decoration:underline; }
+
+/* ===== Stat strip (Dawn of Joy proof) ===== */
+.proof-strip{
+  display:flex;
+  gap:40px;
+  margin:20px 0 8px;
+  flex-wrap:wrap;
+}
+.proof-item b{
+  font-family:var(--serif);
+  font-size:30px;
+  display:block;
+  color:var(--coral-deep);
+}
+.proof-item span{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--stone);
+}
+
+.quote-block{
+  border-left:2px solid var(--coral);
+  padding-left:18px;
+  margin:20px 0;
+  font-style:italic;
+  font-family:var(--serif);
+  font-size:16px;
+  color:var(--ink);
+}
+.quote-block cite{
+  display:block;
+  font-style:normal;
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--stone-light);
+  margin-top:6px;
+}
+
+/* ===== Skills grid ===== */
+.skills-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:32px;
+}
+@media (max-width:760px){ .skills-grid{grid-template-columns:1fr 1fr;} }
+@media (max-width:520px){ .skills-grid{grid-template-columns:1fr;} }
+.skill-col h4{
+  font-family:var(--mono);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--green);
+  margin-bottom:14px;
+}
+.skill-col ul{ list-style:none; }
+.skill-col li{
+  font-size:14.5px;
+  color:var(--ink);
+  padding:7px 0;
+  border-bottom:1px solid var(--line);
+}
+
+/* ===== Education ===== */
+.edu-card{
+  background:var(--paper-2);
+  border-radius:20px;
+  padding:40px;
+}
+@media (max-width:640px){ .edu-card{padding:28px 22px;} }
+.edu-card h3{
+  font-family:var(--serif);
+  font-size:24px;
+  font-weight:500;
+  margin-bottom:6px;
+}
+.edu-card .stamp{
+  display:inline-block;
+  font-family:var(--mono);
+  font-size:11px;
+  background:var(--green);
+  color:var(--paper);
+  padding:4px 12px;
+  border-radius:100px;
+  margin:10px 0 18px;
+}
+.edu-card p{ font-size:15px; line-height:1.7; color:var(--stone); margin-bottom:10px;}
+
+/* ===== Footer / contact ===== */
+.contact{
+  padding:100px 0 80px;
+  text-align:left;
+}
+.contact h2{
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:clamp(32px,5vw,56px);
+  line-height:1.1;
+  max-width:700px;
+}
+.contact-links{
+  display:flex;
+  gap:16px;
+  margin-top:40px;
+  flex-wrap:wrap;
+}
+footer{
+  border-top:1px solid var(--line);
+  padding:28px 0 60px;
+  display:flex;
+  justify-content:space-between;
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--stone-light);
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+/* fade-in on scroll */
+.fade-in{
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity .7s ease, transform .7s ease;
+}
+.fade-in.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <div class="brand-mark">Roshana Richards</div>
+    <div class="nav-links">
+      <a href="#gutty">Gutty</a>
+      <a href="#chapters">Experience</a>
+      <a href="#rockchurch">ROCKChurch</a>
+      <a href="#dawnofjoy">Dawn of Joy</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="rail" id="rail"></div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-eyebrow">London, UK — Open to work</div>
+    <h1>I take ideas from <em>zero</em><br>to <em>live</em>, again and again.</h1>
+    <p class="hero-sub">
+      Software developer, product builder, media leader, and founder. I've shipped a published
+      iOS app, architected production databases, led a creative team, and run my own e-commerce
+      brand — all in the last three years.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><b>First Class Hons.</b>BSc Social Sciences + Year in Computing</div>
+      <div class="hero-meta-item"><b>4 live products</b>Shipped, not just designed</div>
+      <div class="hero-meta-item"><b>3 yrs</b>Concurrent leadership + technical roles</div>
+    </div>
+    <div class="featured-links" style="margin-top:40px;">
+      <a href="https://github.com/roshanarich" target="_blank" class="btn btn-dark">GitHub ↗</a>
+      <a href="https://linkedin.com/in/roshanarichards" target="_blank" class="btn btn-ghost" style="border-color:var(--line); color:var(--ink);">LinkedIn ↗</a>
+    </div>
+  </header>
+
+  <!-- FEATURED: GUTTY -->
+  <section id="gutty">
+    <div class="section-head">
+      <div>
+        <div class="section-num">01 / FEATURED PRODUCT</div>
+        <div class="section-title">Concept to App Store</div>
+      </div>
+      <div class="section-date">Nov 2023 — Live</div>
+    </div>
+
+    <div class="featured">
+      <div class="featured-grid">
+        <div>
+          <div class="featured-tag">Published · Apple App Store</div>
+          <h3>Gutty — Food Scanner App</h3>
+          <p>
+            A consumer mobile app I took from concept to a live public release, built end-to-end
+            in FlutterFlow with a Supabase (PostgreSQL) backend. I designed the data model,
+            built the barcode scan-and-score logic, and shaped every screen a user touches.
+          </p>
+          <p>
+            Full ownership across the stack: schema design, authentication, role-based access,
+            and the front-end experience — then shipped to the public App Store, not just a
+            prototype.
+          </p>
+
+          <div class="featured-stats">
+            <div class="fstat"><b>iOS</b><span>LIVE ON APP STORE</span></div>
+            <div class="fstat"><b>v1.04</b><span>SHIPPED &amp; ITERATED</span></div>
+            <div class="fstat"><b>5★</b><span>USER REVIEW</span></div>
+          </div>
+
+          <div class="quote-block">
+            "This app has helped me shop smarter ... in amazing ways!"
+            <cite>— App Store review</cite>
+          </div>
+
+          <div class="featured-links">
+            <a href="https://apps.apple.com/gb/app/gutty-food-scanner-gut-hub/id6753943024" target="_blank" class="btn btn-primary">View on App Store ↗</a>
+          </div>
+        </div>
+
+        <div class="phone-stack">
+          <div class="phone-frame">
+            <img src="assets/gutty-home.jpg" alt="Gutty app home screen">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-visual" style="margin-top:28px;">
+      <div class="shot-slot"><img src="assets/gutty-store.jpg" alt="Gutty App Store listing"></div>
+      <div class="shot-slot"><img src="assets/gutty-scan.jpg" alt="Gutty product scan result"></div>
+      <div class="shot-slot"><img src="assets/gutty-explore.jpg" alt="Gutty product explore screen"></div>
+    </div>
+  </section>
+
+  <!-- CHAPTERS -->
+  <section id="chapters">
+    <div class="section-head">
+      <div>
+        <div class="section-num">02 / TECHNICAL EXPERIENCE</div>
+        <div class="section-title">Building production systems</div>
+      </div>
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-meta">
+        <div class="rail-mark active" style="position:static; display:inline-block; margin-right:8px;"></div>
+        <div class="chapter-role">Junior Software Developer</div>
+        <div class="chapter-org">Parle Agency</div>
+        <div class="chapter-date">Nov 2023 — Present</div>
+      </div>
+      <div class="chapter-body">
+        <p>
+          I own the data platform behind a production members-only application — designing
+          PostgreSQL schemas in Supabase, writing SQL views and indexes for authentication,
+          content delivery, and role-based access, and implementing Row Level Security to keep
+          sensitive data protected without slowing anyone down.
+        </p>
+        <p>
+          Optimised queries and access patterns to cut application load times by 30%, and work
+          directly with stakeholders to evolve the data model as the product grows.
+        </p>
+        <div class="chapter-tags">
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Supabase</span>
+          <span class="tag">Row Level Security</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Stakeholder liaison</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-meta">
+        <div class="rail-mark active" style="position:static; display:inline-block; margin-right:8px;"></div>
+        <div class="chapter-role">React Developer</div>
+        <div class="chapter-org">Personal Project</div>
+        <div class="chapter-date">2024</div>
+      </div>
+      <div class="chapter-body">
+        <p>
+          Built a responsive staff dashboard using React (Vite), Tailwind CSS, and Lucide
+          icons — structured into modular components ready for real API integration, with
+          accessibility and performance as first-class concerns rather than afterthoughts.
+        </p>
+        <div class="chapter-tags">
+          <span class="tag">React</span>
+          <span class="tag">Tailwind CSS</span>
+          <span class="tag">Component architecture</span>
+        </div>
+        <a href="https://github.com/roshanarich/staff-dashboard" target="_blank" class="chapter-link">View the code on GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROCKCHURCH -->
+  <section id="rockchurch">
+    <div class="section-head">
+      <div>
+        <div class="section-num">03 / LEADERSHIP</div>
+        <div class="section-title">Head of Media — ROCKChurch London</div>
+      </div>
+      <div class="section-date">Jun 2023 — Present</div>
+    </div>
+
+    <p style="font-size:16px; line-height:1.75; max-width:680px; margin-bottom:8px;">
+      I lead the team behind all digital content and social media for a multi-platform organisation
+      — reviewing every reel and video before it goes out, writing captions, and setting content
+      strategy across Instagram, TikTok, and Facebook. Beyond content, I coordinate logistics and
+      communications for weekly services and events, managing follow-ups across teams against
+      fixed weekly deadlines.
+    </p>
+
+    <div class="proof-strip">
+      <div class="proof-item"><b>573</b><span>POSTS PUBLISHED</span></div>
+      <div class="proof-item"><b>464</b><span>INSTAGRAM FOLLOWERS</span></div>
+      <div class="proof-item"><b>3</b><span>PLATFORMS MANAGED</span></div>
+    </div>
+
+    <div class="chapter-visual" style="margin-top:8px; grid-template-columns:repeat(4, 1fr);">
+      <div class="shot-slot"><img src="assets/rockchurch-ig-grid.jpg" alt="ROCKChurch London Instagram content grid"></div>
+      <div class="shot-slot"><img src="assets/rockchurch-ig-profile.jpg" alt="ROCKChurch London Instagram profile"></div>
+      <div class="shot-slot"><img src="assets/rockchurch-tiktok.jpg" alt="ROCKChurch London TikTok profile"></div>
+      <div class="shot-slot"><img src="assets/rockchurch-ig-profile-light.jpg" alt="ROCKChurch London Instagram followers"></div>
+    </div>
+
+    <div class="featured-links" style="margin-top:28px;">
+      <a href="https://www.instagram.com/londonrockchurch/?hl=en" target="_blank" class="btn btn-dark">View the Instagram ↗</a>
+    </div>
+  </section>
+
+  <!-- DAWN OF JOY -->
+  <section id="dawnofjoy">
+    <div class="section-head">
+      <div>
+        <div class="section-num">04 / FOUNDER</div>
+        <div class="section-title">Dawn of Joy Illustrations</div>
+      </div>
+      <div class="section-date">Ongoing</div>
+    </div>
+
+    <p style="font-size:16px; line-height:1.75; max-width:680px; margin-bottom:8px;">
+      An independent illustration brand I founded and run alone — faith-inspired prints and
+      stickers, sold through my own Shopify store and Etsy. I handle everything: brand
+      identity, original illustration in Procreate, product design, customer relations, order
+      fulfilment, and marketing.
+    </p>
+
+    <div class="proof-strip">
+      <div class="proof-item"><b>10</b><span>SALES ON ETSY</span></div>
+      <div class="proof-item"><b>5.0</b><span>AVERAGE RATING</span></div>
+      <div class="proof-item"><b>14</b><span>PRODUCTS LIVE</span></div>
+    </div>
+
+    <div class="quote-block">
+      "The sticker looks exactly like the photo and the measurements are accurate... Great quality
+      and the sticker has good colour and detail. Definitely recommend!"
+      <cite>— Verified Etsy review</cite>
+    </div>
+
+    <div class="chapter-visual" style="margin-top:8px;">
+      <div class="shot-slot"><img src="assets/doj-art-2.jpg" alt="Dawn of Joy Samson illustration print, framed"></div>
+      <div class="shot-slot"><img src="assets/doj-art-1.jpg" alt="Dawn of Joy scripture illustration print, framed"></div>
+      <div class="shot-slot"><img src="assets/doj-shop-products.jpg" alt="Dawn of Joy store product grid"></div>
+    </div>
+
+    <div class="featured-links" style="margin-top:28px;">
+      <a href="https://dawnofjoyillustrations.store/" target="_blank" class="btn btn-dark">Visit the store ↗</a>
+      <a href="https://www.etsy.com/uk/shop/DawnOfJoyStore" target="_blank" class="btn btn-ghost" style="border-color:var(--line); color:var(--ink);">Shop on Etsy ↗</a>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-head">
+      <div>
+        <div class="section-num">05 / TOOLKIT</div>
+        <div class="section-title">What I build with</div>
+      </div>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-col">
+        <h4>Build &amp; Code</h4>
+        <ul>
+          <li>HTML / CSS / JavaScript</li>
+          <li>React (Vite), Node.js</li>
+          <li>Python, PHP</li>
+          <li>FlutterFlow, Adalo</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <h4>Data &amp; Backend</h4>
+        <ul>
+          <li>PostgreSQL (Supabase)</li>
+          <li>MySQL, MongoDB</li>
+          <li>Schema design, RLS</li>
+          <li>Auth &amp; access control</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <h4>Design &amp; Tools</h4>
+        <ul>
+          <li>Figma, Canva, Procreate</li>
+          <li>WordPress</li>
+          <li>GitHub, CI/CD</li>
+          <li>A/B &amp; user testing</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-head">
+      <div>
+        <div class="section-num">06 / EDUCATION</div>
+        <div class="section-title">University of Kent</div>
+      </div>
+    </div>
+    <div class="edu-card">
+      <h3>BSc (Hons) Social Sciences — Sociology &amp; Criminology, with Year in Computing</h3>
+      <span class="stamp">First Class Honours</span>
+      <p><b style="color:var(--ink);">Key modules:</b> Programming for AI · Cloud Computing · Human–Computer Interaction (UX/UI) · Solving Problems with Data</p>
+      <p><b style="color:var(--ink);">Final project:</b> Designed a research website with structured pages and validated data workflows.</p>
+      <p style="margin-top:18px; color:var(--ink); font-size:14px;">
+        <b>Leadership:</b> Vice-President, Rock Solid Campus Society — grew membership 30% and led events for 20+ attendees.
+        Student Representative, University of Kent.
+      </p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact">
+      <div class="section-num" style="margin-bottom:18px;">07 / GET IN TOUCH</div>
+      <h2>Building something?<br>Let's talk.</h2>
+      <div class="contact-links">
+        <a href="mailto:roshanarichards2000@gmail.com" class="btn btn-dark">roshanarichards2000@gmail.com</a>
+        <a href="tel:07758059375" class="btn btn-ghost" style="border-color:var(--line); color:var(--ink);">07758 059375</a>
+      </div>
+      <div class="contact-links">
+        <a href="https://github.com/roshanarich" target="_blank" class="btn btn-ghost" style="border-color:var(--line); color:var(--ink);">GitHub ↗</a>
+        <a href="https://linkedin.com/in/roshanarichards" target="_blank" class="btn btn-ghost" style="border-color:var(--line); color:var(--ink);">LinkedIn ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Roshana Richards</span>
+    <span>London, United Kingdom</span>
+  </footer>
+</div>
+
+<script>
+// Fade-in on scroll
+const els = document.querySelectorAll('.chapter, .featured, .edu-card, .skills-grid');
+els.forEach(el => el.classList.add('fade-in'));
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); } });
+}, { threshold: 0.12 });
+els.forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
